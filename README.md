@@ -5,3 +5,5 @@ My notes for Clojure for Machine Learning. These are my notes and really just a 
 Most importantly, I can't promise much about my clojure code ... this is here because I find it interesting and I want to learn :)
 
 Before you run this code, I strongly suggest you first read Clojure for the Brave and True (http://www.braveclojure.com/)
+
+I would also strongly recommend doing Andrew Ng's Machine Learning course on coursera. While it's examples are done in Octave/Matlab, it explains the conceptual stuff really well
