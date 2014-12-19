@@ -1,9 +1,13 @@
 (ns clojure-machine-learning.core
   (:gen-class)
-  (:use clojure.core.matrix))
+  (:use clojure.core.matrix)
+  (:require [clatrix.core :as cl]))
+
+(def A (matrix [[0 1 2] [3 4 5]]))
+(def B (cl/matrix [[0 1 2] [3 4 5]]))
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "My brain dump/notes."
   [& args]
-  (def A (matrix [[0 1 2] [3 4 5]]))
-  (pm A))
+  (pm A)
+  (pm B))
