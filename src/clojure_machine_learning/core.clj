@@ -31,6 +31,14 @@
   (let [repeater #(repeat n %)]
     (matrix (-> e repeater repeater))))
 
+;;
+(defn square-mat
+  "Creates a square matrix of size n x n whose elements are all e. Accepts an option argument for the matrix implemtation"
+  [n e & {:keys [implementation]
+          :or {implementation :persistent-vector}}]
+  (let [repeater #(repeat n %)]
+    (matrix implementation (-> e repeater repeater))))
+
 (defn -main
   "My brain dump/notes."
   [& args]
@@ -50,4 +58,5 @@
   (println "print cl/map-indexed")
   (pm (cl/map-indexed (fn [i j m] i) B))
   (pm (square-mat 3 1.2))
+  (pm (square-mat 2 1 :implementation :clatrix))
   )
