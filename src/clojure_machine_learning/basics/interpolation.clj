@@ -1,5 +1,6 @@
 (ns interpolation
-  (:use [incanter.charts :only [xy-plot add-points]]
+  (:use clojure.core.matrix
+        [incanter.charts :only [xy-plot add-points]]
         [incanter.core :only [view]])
   (:require [clojure.core.matrix.operators :as M]
             [clatrix.core :as cl]))
@@ -9,7 +10,7 @@
 ;; basically, create a smooth line from a matrix of vectors
 ;; start with a matrix
 (defn lmatrix [n]
-  (cl/compute-matrix :clatrix [n (+ n 2)]
+  (compute-matrix :clatrix [n (+ n 2)]
                   (fn [i j] ({0 -1, 1 2, 2 -1} (- j i) 0))))
 
 ;; create a function which works out what the "hidden" values for x and y would be
@@ -52,4 +53,3 @@
 
 
 (pm (lmatrix 4))
-(plot-rand-sample)
