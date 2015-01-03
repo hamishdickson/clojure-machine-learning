@@ -3,7 +3,7 @@
   (:gen-class)
   (:use clojure.core.matrix)
   (:require [clatrix.core :as cl]
-      [clojure.core.matrix.operators :as M])
+            [clojure.core.matrix.operators :as M])
   (:refer-clojure :exclude [+ - *]))
 
 (def A (matrix [[0 1 2] [3 4 5]]))
@@ -20,13 +20,6 @@
 
 ;; you can use get to get an element
 (cl/get B 1 1)
-
-;; for functional composition (think FUNC), there are two things we
-;; can use map and map-indexed
-;; nb doesn't work whe you start excluding stuff
-;;(def D (cl/map-indexed
-;;        (fn [i j m] (* m 2)) B))
-
 
 ;; to generate a matrix where the number of rows and columns is equal,
 ;; you can generate it like this....
@@ -59,21 +52,6 @@
   (and (= (count A) (count B))
        (reduce #(and %1 %2) (map = A B))))
 
-;; matrix addition
-;;(defn mat-add
-;;  "Adds two matricies"
-;;  [A B]
-;;  (mapv #(mapv + %1 %2) A B))
-
-;; for multiple matricies
-;;(defn mat-add-lots
-;;  "Add two or more matricies"
-;;  ([A B]
-;;   (mapv #(mapv + %1 %2) A B))
-;;  ([A B & more]
-;;   (let [M (concat [A B] more)]
-;;     (reduce mat-add-lots M))))
-
 ;; simple time comparison
 (defn time-mat-mul
   "Measures the time for multiplication of two matricies A and B"
@@ -90,15 +68,6 @@
   (let [X (rand-square-mat 100)
         Y (rand-square-mat 100)]
     (time-mat-mul X Y)))
-
-
-;; interpolation using Tichonov regularization
-;; basically, create a smooth line from a matrix of vectors
-;; start with a matrix
-(defn lmatrix [n]
-  (compute-matrix :clatrix [n (+ n 2)]
-                  (fn [i j] ({0 -1, 1 2, 2 -1} (- j i) 0))))
-
 
 
 ;; =============== main ==================
@@ -121,25 +90,20 @@
   (println "c is a vector length 3 ... see: " c)
   (println "print cl/map-indexed")
   (pm (cl/map-indexed (fn [i j m] i) B))
-  ;;(pm (square-mat 3 1.2)) ;; I don't know why this doesn't work ...
-  ;;(pm (square-mat 2 1 :implementation :clatrix))
   (pm mink)
-
 
   (println core-matrix-mul-time)
   (println clatrix-mul-time)
 
   ;; note adding matricies isn't directly supported - use matrix.operations
   (println (M/== B C))
-  (pm (M/+ B C))
+  ;;(pm (M/+ B C))
 
   ;; multiplication almost trivial
-  (pm (M/* B C))
+  ;;(pm (M/* B C))
   ;; to get the inverse
   (pm (inverse B))
 
   ;; determinant (not sure why you'd need this ... but it's there)
   (println (det B))
-
-  (pm (lmatrix 4))
-  )
+)

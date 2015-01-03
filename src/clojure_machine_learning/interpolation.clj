@@ -1,10 +1,13 @@
-(ns my-namespace
+(ns interpolation
   (:use [incanter.charts :only [xy-plot add-points]]
         [incanter.core :only [view]])
   (:require [clojure.core.matrix.operators :as M]
             [clatrix.core :as cl]))
 
-;; define the lmatrix
+
+;; interpolation using Tichonov regularization
+;; basically, create a smooth line from a matrix of vectors
+;; start with a matrix
 (defn lmatrix [n]
   (compute-matrix :clatrix [n (+ n 2)]
                   (fn [i j] ({0 -1, 1 2, 2 -1} (- j i) 0))))
