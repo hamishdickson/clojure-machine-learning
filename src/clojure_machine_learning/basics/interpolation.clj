@@ -9,7 +9,7 @@
 ;; basically, create a smooth line from a matrix of vectors
 ;; start with a matrix
 (defn lmatrix [n]
-  (compute-matrix :clatrix [n (+ n 2)]
+  (cl/compute-matrix :clatrix [n (+ n 2)]
                   (fn [i j] ({0 -1, 1 2, 2 -1} (- j i) 0))))
 
 ;; create a function which works out what the "hidden" values for x and y would be
@@ -21,7 +21,7 @@
     {:L (M/* (lmatrix n) lambda)
      :observed (take n-observed i)
      :hidden (drop n-observed i)
-     :observed-values (matrix :clatrix
+     :observed-values (cl/matrix :clatrix
                               (repeatedly n-observed rand))}))
 
 (defn solve
@@ -41,7 +41,7 @@
   "Plots sample points of a solution s"
   [s]
   (let [X (concat (:hidden s) (:observed s))
-        Y (concat (:hidden-values x) (:observed-values s))]
+        Y (concat (:hidden-values s) (:observed-values s))]
     (view
      (add-points
       (xy-plot X Y) (:observed s) (:observed-values s)))))
