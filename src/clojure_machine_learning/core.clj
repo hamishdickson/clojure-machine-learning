@@ -44,6 +44,12 @@
   (let [repeater #(repeat n %)]
     (matrix implementation (-> e repeater repeater))))
 
+(defn rand-square-mat
+  "Generates a random matrix of size n"
+  [n]
+  ;; nb this doesn't work! only here for example reasons
+  (matrix (repeat n (repeat n (rand-int 100)))))
+
 (def mink (cl/matrix [[-1 0 0 0] [0 1 0 0] [0 0 1 0] [0 0 0 1]]))
 
 ;; matrix equality is just if the size is the same and each element is the same
@@ -54,19 +60,45 @@
        (reduce #(and %1 %2) (map = A B))))
 
 ;; matrix addition
-(defn mat-add
-  "Adds two matricies"
-  [A B]
-  (mapv #(mapv + %1 %2) A B))
+;;(defn mat-add
+;;  "Adds two matricies"
+;;  [A B]
+;;  (mapv #(mapv + %1 %2) A B))
 
 ;; for multiple matricies
-(defn mat-add-lots
-  "Add two or more matricies"
-  ([A B]
-   (mapv #(mapv + %1 %2) A B))
-  ([A B & more]
-   (let [M (concat [A B] more)]
-     (reduce mat-add-lots M))))
+;;(defn mat-add-lots
+;;  "Add two or more matricies"
+;;  ([A B]
+;;   (mapv #(mapv + %1 %2) A B))
+;;  ([A B & more]
+;;   (let [M (concat [A B] more)]
+;;     (reduce mat-add-lots M))))
+
+;; simple time comparison
+(defn time-mat-mul
+  "Measures the time for multiplication of two matricies A and B"
+  [A B]
+  (time (M/* A B)))
+
+
+(defn core-matrix-mul-time []
+  (let [X (rand-square-mat 100)
+        Y (rand-square-mat 100)]
+    (time-mat-mul X Y)))
+
+(defn clatrix-mul-time []
+  (let [X (rand-square-mat 100)
+        Y (rand-square-mat 100)]
+    (time-mat-mul X Y)))
+
+
+;; interpolation using Tichonov regularization
+;; basically, create a smooth line from a matrix of vectors
+;; start with a matrix
+(defn lmatrix [n]
+  (compute-matrix :clatrix [n (+ n 2)]
+                  (fn [i j] ({0 -1, 1 2, 2 -1} (- j i) 0))))
+
 
 
 ;; =============== main ==================
@@ -92,7 +124,22 @@
   ;;(pm (square-mat 3 1.2)) ;; I don't know why this doesn't work ...
   ;;(pm (square-mat 2 1 :implementation :clatrix))
   (pm mink)
+
+
+  (println core-matrix-mul-time)
+  (println clatrix-mul-time)
+
   ;; note adding matricies isn't directly supported - use matrix.operations
   (println (M/== B C))
   (pm (M/+ B C))
+
+  ;; multiplication almost trivial
+  (pm (M/* B C))
+  ;; to get the inverse
+  (pm (inverse B))
+
+  ;; determinant (not sure why you'd need this ... but it's there)
+  (println (det B))
+
+  (pm (lmatrix 4))
   )
