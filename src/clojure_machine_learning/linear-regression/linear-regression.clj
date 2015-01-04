@@ -30,11 +30,14 @@
 (defn plot-scatter []
   (view linear-samp-scatter))
 
+(plot-scatter)
+;; incanter has a liner fit function to work out what the best fit is!
+
 (defn plot-model []
   (view (add-lines linear-samp-scatter X (:fitted samp-linear-model))))
 
 (def samp-linear-model
   (linear-model Y X))
 
-(plot-scatter)
+
 (plot-model)
