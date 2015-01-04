@@ -1,8 +1,10 @@
 (ns linear-regression
-  (:gen-class)
-  (:use clojure.core.matrix)
-  (:require [clatrix.core :as cl]
-      [clojure.core.matrix.operators :as M]))
+  (:use clojure.core.matrix
+        [incanter.charts :only [scatter-plot add-lines]]
+        [incanter.stats :only [linear-model]]
+        [incanter.core :only [view]])
+  (:require [clojure.core.matrix.operators :as M]
+            [clatrix.core :as cl]))
 
 
 ;; idea is to generalize facts from emperical data
@@ -28,4 +30,11 @@
 (defn plot-scatter []
   (view linear-samp-scatter))
 
+(defn plot-model []
+  (view (add-lines linear-samp-scatter X (:fitted samp-linear-model))))
+
+(def samp-linear-model
+  (linear-model Y X))
+
 (plot-scatter)
+(plot-model)
