@@ -40,9 +40,18 @@
 
 
 (plot-model)
+
 ;; cool - you can generate the coefficients for the linear model
 ;; creates a vector with epsilon and then beta (see README.md)
 (:coefs samp-linear-model)
+
+;; similarly, can calculate residuals like this
+(:residuals samp-linear-model)
+
+;; sum of squared errors
+(:sse samp-linear-model)
+
+
 
 
 
