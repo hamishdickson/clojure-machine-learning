@@ -51,6 +51,8 @@
 ;; sum of squared errors
 (:sse samp-linear-model)
 
+;; R^2 error
+(:r-square samp-linear-model)
 
 
 
