@@ -21,4 +21,4 @@
         y (:fitted iris-linear-model)]
     (view (xy-plot x y :x-label "X" :y-label "Y"))))
 
-(
+(plot-iris-linear-model)
