@@ -22,3 +22,9 @@
     (view (xy-plot x y :x-label "X" :y-label "Y"))))
 
 (plot-iris-linear-model)
+
+
+;; ah this is useful - you can check that the number of coefficients P is greater than the total number
+;; of independent variables
+(= (count (:coefs iris-linear-model))
+  (+ 1 (column-count X)))
